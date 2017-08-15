@@ -1,13 +1,22 @@
 package com.jacoli.controllers;
 
+import com.jacoli.DO.ItemDO;
+import com.jacoli.mappers.ItemsMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
  * Created by lichuange on 2017/8/15.
  */
 @Controller
 public class AdminController {
+
+    @Autowired
+    private ItemsMapper itemsMapper;
 
     @RequestMapping("/index")
     public String adminMain() {
@@ -40,8 +49,11 @@ public class AdminController {
     }
 
     @RequestMapping("/table")
-    public String table() {
-        return "table";
+    public ModelAndView table() {
+        ModelAndView modelAndView = new ModelAndView("/table");
+        List<ItemDO> items = itemsMapper.getItems();
+        modelAndView.addObject("items", items);
+        return modelAndView;
     }
 
     @RequestMapping("/ui-elements")

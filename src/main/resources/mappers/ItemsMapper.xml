@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jacoli.mappers.ItemsMapper">
+
+    <resultMap id="BaseResultMap" type="com.jacoli.DO.ItemDO">
+        <result column="pic_url" property="picUrl"/>
+        <result column="price_cent" property="priceInCent"/>
+    </resultMap>
+
+    <select id="getItems" resultType="com.jacoli.DO.ItemDO" resultMap="BaseResultMap">
+        SELECT *
+        FROM items
+    </select>
+
+    <select id="getItem" resultType="com.jacoli.DO.ItemDO" resultMap="BaseResultMap">
+        SELECT *
+        FROM items WHERE id=#{id}
+    </select>
+
+</mapper>
