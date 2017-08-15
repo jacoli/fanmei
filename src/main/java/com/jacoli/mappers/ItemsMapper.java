@@ -18,6 +18,10 @@ public interface ItemsMapper {
 
     int update(ItemDO newDO);
 
+    void deleteItem(long id);
+
+    void softDeleteItem(long id);
+
     List<ItemDO> getItems();
 
     ItemDO getItemById(long id);

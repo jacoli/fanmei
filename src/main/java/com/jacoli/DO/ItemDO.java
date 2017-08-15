@@ -12,6 +12,7 @@ public class ItemDO {
     private String title;
     private String picUrl;
     private long priceInCent;
+    private boolean deleted;
 
     public long getId() {
         return id;
@@ -59,5 +60,17 @@ public class ItemDO {
 
     public void setPriceInCent(long priceInCent) {
         this.priceInCent = priceInCent;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public boolean isOnline() {
+        return !deleted;
     }
 }

@@ -40,6 +40,7 @@
                                         <th>标题</th>
                                         <th>图片</th>
                                         <th>价格</th>
+                                        <th>操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -62,6 +63,9 @@
                                             <img th:src="${item.getPicUrl()}" class="img-rounded" />
                                         </td>
                                         <td th:text="${item.getPriceInCent()}">价格</td>
+                                        <td>
+                                            <button class="btn btn-danger delete-item" th:attr="item-id=${item.getId()}">删除</button>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -701,10 +705,34 @@
 <script>
     $(document).ready(function () {
         $('#dataTables-example').dataTable();
+
+
+        $('.delete-item').click(function () {
+            var itemId = $(this).attr("item-id");
+            if (itemId === undefined || itemId == '') {
+                alert("无法获取抽佣条目ID【commissionId】!");
+                return;
+            }
+            $.post("/items/delete", {id: itemId}, function (result) {
+//
+//                if (result.succ) {
+//                    alert('操作成功!');
+//                    window.location.reload();
+//                } else {
+//                    alert(result.message);
+//                }
+                window.location.reload();
+                alert('操作成功!');
+            });
+        });
+
+
     });
 </script>
 <!-- Custom Js -->
 <script src="assets/js/custom-scripts.js"></script>
+
+
 
 
 </body>

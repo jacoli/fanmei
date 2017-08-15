@@ -30,4 +30,13 @@
         FROM items WHERE id=#{id}
     </select>
 
+    <select id="deleteItem">
+        DELETE FROM items WHERE id=#{id}
+    </select>
+
+    <select id="softDeleteItem">
+        UPDATE items SET deleted=true
+        WHERE id=#{id}
+    </select>
+
 </mapper>

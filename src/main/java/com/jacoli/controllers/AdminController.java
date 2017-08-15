@@ -2,15 +2,18 @@ package com.jacoli.controllers;
 
 import com.jacoli.DO.ItemDO;
 import com.jacoli.mappers.ItemsMapper;
+import com.jacoli.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by lichuange on 2017/8/15.
@@ -20,6 +23,9 @@ public class AdminController {
 
     @Autowired
     private ItemsMapper itemsMapper;
+
+    @Autowired
+    private ItemService itemService;
 
     @RequestMapping("/index")
     public String adminMain() {
@@ -46,16 +52,15 @@ public class AdminController {
         return "morris-chart";
     }
 
-    @RequestMapping("/tab-pannel")
+    @RequestMapping("/tab-panel")
     public String tabPannel() {
-        return "tab-pannel";
+        return "tab-panel";
     }
 
     @RequestMapping("/table")
     public ModelAndView table() {
         ModelAndView modelAndView = new ModelAndView("/table");
-        List<ItemDO> items = itemsMapper.getItems();
-        modelAndView.addObject("items", items);
+        modelAndView.addObject("items", itemService.getOnlineItems());
         return modelAndView;
     }
 
@@ -71,7 +76,7 @@ public class AdminController {
 
     @RequestMapping(value = "/create_item", method = RequestMethod.POST)
     public String createItem(@RequestParam("title") String title,
-                             @RequestParam("price") long price) {
+                             @Valid @RequestParam("price") long price) {
 
         ItemDO itemDO = new ItemDO();
         itemDO.setTitle(title);
