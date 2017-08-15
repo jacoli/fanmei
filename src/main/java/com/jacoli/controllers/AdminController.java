@@ -4,7 +4,10 @@ import com.jacoli.DO.ItemDO;
 import com.jacoli.mappers.ItemsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -59,5 +62,23 @@ public class AdminController {
     @RequestMapping("/ui-elements")
     public String uiElements() {
         return "ui-elements";
+    }
+
+    @RequestMapping(value = "/create_item", method = RequestMethod.GET)
+    public String createItemHtml() {
+        return "create_item";
+    }
+
+    @RequestMapping(value = "/create_item", method = RequestMethod.POST)
+    public String createItem(@RequestParam("title") String title,
+                             @RequestParam("price") long price) {
+
+        ItemDO itemDO = new ItemDO();
+        itemDO.setTitle(title);
+        itemDO.setPriceInCent(price);
+
+        itemsMapper.insert(itemDO);
+
+        return "create_item";
     }
 }

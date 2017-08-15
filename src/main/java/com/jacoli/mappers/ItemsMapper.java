@@ -2,6 +2,7 @@ package com.jacoli.mappers;
 
 import com.jacoli.DO.ItemDO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,7 +14,13 @@ import java.util.List;
 @Mapper
 public interface ItemsMapper {
 
+    int insert(ItemDO insertDO);
+
+    int update(ItemDO newDO);
+
     List<ItemDO> getItems();
 
     ItemDO getItemById(long id);
+
+    ItemDO getById(@Param("id") long itemId);
 }

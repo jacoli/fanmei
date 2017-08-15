@@ -2,6 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jacoli.mappers.ItemsMapper">
 
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO items (created_at, modified_at, title, pic_url, price_cent)
+        VALUES (now(), now(), #{title}, #{picUrl}, #{priceInCent})
+    </insert>
+
+    <update id="update">
+        UPDATE items
+        <set>
+            modified_at=NOW(), title=#{title}, pic_url=#{picUrl}, price_cent=#{priceInCent}
+        </set>
+        WHERE id = #{id}
+    </update>
+
     <resultMap id="BaseResultMap" type="com.jacoli.DO.ItemDO">
         <result column="pic_url" property="picUrl"/>
         <result column="price_cent" property="priceInCent"/>
