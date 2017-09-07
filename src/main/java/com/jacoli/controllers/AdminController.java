@@ -32,6 +32,13 @@ public class AdminController {
         return "index";
     }
 
+    @RequestMapping("/item_list")
+    public ModelAndView item_list() {
+        ModelAndView modelAndView = new ModelAndView("/item_list");
+        modelAndView.addObject("items", itemService.getOnlineItems());
+        return modelAndView;
+    }
+
     @RequestMapping("/chart")
     public String chart() {
         return "chart";
@@ -85,5 +92,13 @@ public class AdminController {
         itemsMapper.insert(itemDO);
 
         return "create_item";
+    }
+
+    @RequestMapping(value = "/item_detail", method = RequestMethod.GET)
+    public ModelAndView item_detail(@RequestParam(name = "id", required = false, defaultValue = "0") long id) {
+        ModelAndView modelAndView = new ModelAndView("/item_detail");
+        ItemDO itemDO = itemsMapper.getItemById(id);
+        modelAndView.addObject("item", itemDO);
+        return modelAndView;
     }
 }
